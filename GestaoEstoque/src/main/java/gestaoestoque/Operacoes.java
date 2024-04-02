@@ -1,4 +1,9 @@
+
+
 package gestaoestoque;
+
+
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,8 +58,8 @@ public class Operacoes {
              
              if(idProduct == produtos.get(i).getId()){
                  
+            	 System.out.printf("O produto %s foi removido!!!\n", produtos.get(i).getNome());
                  produtos.remove(i);
-                 System.out.printf("O produto %s foi removido!!!\n", produtos.get(i).getNome());
              }
              
          }
@@ -63,7 +68,7 @@ public class Operacoes {
     
      
      public void editarProduto(){
-      String decisaoEditar = "S";
+      String decisaoEditar = "SIM";
       
          System.out.println("Digite o id do produto que queira editar:");
          int idProduct = scan.nextInt();
@@ -105,7 +110,7 @@ public class Operacoes {
                          
                          System.out.println("Digite o novo preço unitário do produto:");
                          produtos.get(i).setPrecoUnitario(scan.nextDouble());
-                         System.out.printf("O nome do produto agora é R$ %.2f!!\n", produtos.get(i).getPrecoUnitario());
+                         System.out.printf("O preço unitário do produto agora é R$ %.2f!!\n", produtos.get(i).getPrecoUnitario());
                          break;
                          
                      default: 
@@ -116,10 +121,10 @@ public class Operacoes {
                      
                  }
                      
-                   System.out.println("Ainda deseja editar algo no produto? (Digite 'S' para sim ou 'N' para não)");
+                   System.out.println("Ainda deseja editar algo no produto? (Digite 'Sim' ou 'Não')");
                   decisaoEditar = scan.next();
                 decisaoEditar = decisaoEditar.toUpperCase();
-                 }while(decisaoEditar.equals("S"));
+                 }while(decisaoEditar.equals("SIM"));
                  
                  
                  
@@ -127,7 +132,78 @@ public class Operacoes {
              
          }
      }
+     
+     
+     public void exibirDados() {
+    	 
+    	   for(int i = 0;  i < produtos.size(); i++ ){
+    		   
+    		   System.out.println(produtos.get(i).toString());
+    	   }
+    	   
+    	   System.out.println("\n");
+    	 
+     }
+        
+     
+     public void calculos(){
          
+         double valorTotalEstoque = 0;
+         double mediaTotalEstoque = 0;
+         double somadorTotal = 0;
+         
+         for(int i = 0;  i < produtos.size(); i++ ){
+             
+             
+          valorTotalEstoque +=  produtos.get(i).getPrecoUnitario() * produtos.get(i).getQuantidadeDisponivel();
+          somadorTotal +=  produtos.get(i).getQuantidadeDisponivel();
+          mediaTotalEstoque = valorTotalEstoque / somadorTotal;
+          
+         }
+         
+         System.out.printf("Valor total dos produtos: R$ %.2f\n", valorTotalEstoque);
+         System.out.printf("Média total dos produtos: R$ %.2f\n", mediaTotalEstoque);
+         
+     }
+     
+     public void pegarEstoque() {
+    	 
+    	 
+    	 System.out.println("Digite o Id do produto que queira pegar do estoque:");
+    	 int id = scan.nextInt();
+    	 
+    	 for(int i = 0; i< produtos.size(); i++) {
+    		 
+    		 
+    		 if(id == produtos.get(i).getId()) {
+    			 
+    			System.out.printf("Digite a quantidade de %s que deseja pegar do estoque:\n", produtos.get(i).getNome());
+    			int quantidadePegar = scan.nextInt();
+    			
+    	if(quantidadePegar < produtos.get(i).getQuantidadeDisponivel() && quantidadePegar > 0) {
+    		
+    		produtos.get(i).setQuantidadeDisponivel( produtos.get(i).getQuantidadeDisponivel() - quantidadePegar); 
+    		System.out.printf("Preço a pagar: R$ %.2f\n", produtos.get(i).getPrecoUnitario() * quantidadePegar);
+    		
+    	}else if(quantidadePegar == produtos.get(i).getQuantidadeDisponivel()) {
+    		
+    		System.out.printf("Preço a pagar: R$ %.2f\n", produtos.get(i).getPrecoUnitario() * quantidadePegar);
+    		System.out.printf("O produto %s está esgotado do estoque!!!\n", produtos.get(i).getNome());
+    		produtos.remove(i);
+    		
+    	}else {
+    		
+    		System.out.println("Quantidade inválida!!!");
+    	}
+    		
+    			 
+    			 
+    		 }
+    		 
+    	 }
+    	 
+    	 
+     }
          
          
 }
