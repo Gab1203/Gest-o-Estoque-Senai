@@ -1,7 +1,4 @@
-
 package gestaoestoque;
-
-
 public class Produto {
     private String nome;
     private int id;
@@ -56,6 +53,13 @@ public class Produto {
         this.precoUnitario = precoUnitario;
     }
 
+	@Override
+	public String toString() {
+		return "Produto [nome=" + nome + ", id=" + id + ", quantidadeDisponivel=" + quantidadeDisponivel
+				+ ", precoUnitario=" + precoUnitario + "]";
+	}
+
+    
    
     
     
